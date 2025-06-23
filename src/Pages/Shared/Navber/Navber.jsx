@@ -8,6 +8,7 @@ const Navber = () => {
     const { user, logOut } = useAuth();
     const links = <>
         <li><NavLink to='/'>Home</NavLink></li>
+        <li><NavLink to='/coverage'>Coverage</NavLink></li>
         <li><NavLink to='about'>About</NavLink></li>
     </>
     const handleLogOut = () => {
@@ -32,7 +33,7 @@ const Navber = () => {
                         {links}
                     </ul>
                 </div>
-                <Link to='/' className="btn btn-ghost text-xl"><ProFastLogo></ProFastLogo></Link>
+                <h2 className="btn btn-ghost text-xl"><ProFastLogo></ProFastLogo></h2>
             </div>
             <div className="navbar-center hidden lg:flex">
                 <ul className="menu menu-horizontal px-1">

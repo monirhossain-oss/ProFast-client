@@ -5,6 +5,7 @@ import { RouterProvider, } from "react-router";
 import { router } from './router/Router';
 import 'aos/dist/aos.css';
 import Aos from 'aos';
+import 'leaflet/dist/leaflet.css';
 import AuthProvider from './context/AuthContext/AuthProvider';
 
 Aos.init();
