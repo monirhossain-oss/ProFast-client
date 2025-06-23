@@ -28,8 +28,7 @@ const Navber = () => {
                 </ul>
             </div>
             <div className="navbar-end space-x-2">
-                <button className='btn-accent'>login</button>
-                <button className='btn-accent'>register</button>
+                <Link to='/login'>Sing In</Link>
             </div>
         </div>
     );
