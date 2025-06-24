@@ -6,6 +6,8 @@ import Login from "../Pages/Authentication/Login/Login";
 import Register from "../Pages/Authentication/Register/Register";
 import Coverage from "../Pages/coverage/Coverage";
 import Helicopter from "../Pages/Helicapter";
+import PrivetRoutes from "../routes/PrivetRoutes";
+import SendParcel from "../Pages/SendParcel/SendParcel";
 
 export const router = createBrowserRouter([
     {
@@ -23,7 +25,13 @@ export const router = createBrowserRouter([
             {
                 path: 'about',
                  Component: Helicopter
-            }
+            },
+            {
+                path:'sendParcel',
+                element: <PrivetRoutes><SendParcel></SendParcel></PrivetRoutes>,
+                loader: () => fetch('/warehouses.json')
+            },
+
         ]
     },
     {

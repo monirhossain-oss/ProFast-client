@@ -1,7 +1,7 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { FcGoogle } from 'react-icons/fc';
-import { Link } from 'react-router';
+import { Link, Navigate } from 'react-router';
 import useAuth from '../../../hooks/useAuth';
 
 const Login = () => {
