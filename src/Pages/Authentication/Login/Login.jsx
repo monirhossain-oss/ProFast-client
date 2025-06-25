@@ -1,17 +1,21 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { FcGoogle } from 'react-icons/fc';
-import { Link, Navigate } from 'react-router';
+import { Link, Navigate, useLocation, useNavigate } from 'react-router';
 import useAuth from '../../../hooks/useAuth';
 
 const Login = () => {
     const { register, handleSubmit, formState: { errors } } = useForm();
     const { signIn, googleSignIn } = useAuth();
+    const location = useLocation();
+    const navigate = useNavigate();
+    const from = location.state?.from || '/';
     const onSubmit = data => {
         console.log(data);
         signIn(data.email, data.password)
             .then(res => {
-                console.log(res.user)
+                navigate(from)
+                console.log(res)
             })
             .catch(error => {
                 console.log(error)
@@ -22,6 +26,7 @@ const Login = () => {
         googleSignIn()
             .then(result => {
                 console.log(result.user)
+                navigate(from)
             })
             .catch(error => {
                 console.log(error)

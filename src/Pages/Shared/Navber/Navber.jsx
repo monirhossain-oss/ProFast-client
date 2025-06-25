@@ -6,10 +6,16 @@ import { LogOut } from 'lucide-react';
 
 const Navber = () => {
     const { user, logOut } = useAuth();
+    console.log(user?.email)
     const links = <>
         <li><NavLink to='/'>Home</NavLink></li>
         <li><NavLink to='/coverage'>Coverage</NavLink></li>
         <li><NavLink to='/sendParcel'>Send A Parcel</NavLink></li>
+        {
+            user && <>
+                <li><NavLink to='/deshboard'>Deshboard</NavLink></li>
+            </>
+        }
         <li><NavLink to='about'>About</NavLink></li>
     </>
     const handleLogOut = () => {

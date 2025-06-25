@@ -3,6 +3,7 @@ import { useForm, useWatch } from "react-hook-form";
 import Swal from "sweetalert2";
 import { useLoaderData } from "react-router";
 import useAuth from "../../hooks/useAuth";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
 
 const SendParcel = () => {
     const servicesCenter = useLoaderData();
@@ -14,6 +15,7 @@ const SendParcel = () => {
         handleSubmit,
         control,
     } = useForm();
+    const axiosSecure = useAxiosSecure();
 
     const selectedDivision = useWatch({ control, name: "senderRegion" });
     const receiverDivision = useWatch({ control, name: "receiverRegion" });
@@ -37,12 +39,12 @@ const SendParcel = () => {
         if (parcelType === "document") {
             base = isWithinCity ? 60 : 80;
             total = base;
-            breakdown = `Base Price: ৳${base}`;
+            breakdown = `Base Price: TK${base}`;
         } else if (parcelType === "non-document") {
             if (weight <= 3) {
                 base = isWithinCity ? 110 : 150;
                 total = base;
-                breakdown = `Base Price (Up to 3kg): ৳${base}`;
+                breakdown = `Base Price (Up to 3kg): TK${base}`;
             } else {
                 const extraWeight = weight - 3;
                 base = isWithinCity ? 110 : 150;
@@ -51,9 +53,9 @@ const SendParcel = () => {
                 total = base + extraWeightCharge + extraCharge;
 
                 breakdown = `
-          Base Price (First 3kg): ৳${base}<br/>
-          Extra Weight (${extraWeight}kg × ৳40): ৳${extraWeightCharge}<br/>
-          ${!isWithinCity ? `Outside City Extra: ৳${extraCharge}<br/>` : ""}
+          Base Price (First 3kg): TK${base}<br/>
+          Extra Weight (${extraWeight}kg × TK40): TK${extraWeightCharge}<br/>
+          ${!isWithinCity ? `Outside City Extra: TK${extraCharge}<br/>` : ""}
         `;
             }
         }
@@ -81,7 +83,7 @@ const SendParcel = () => {
         <hr class="my-2" />
         ${breakdown}
         <hr class="my-2" />
-        <p><strong>Total: ৳${total}</strong></p>
+        <p><strong>Total: TK${total}</strong></p>
       `,
             icon: "info",
             showCancelButton: true,
@@ -89,18 +91,29 @@ const SendParcel = () => {
             cancelButtonText: "Edit",
         }).then((result) => {
             if (result.isConfirmed) {
-                 const trackingId = `TRK-${Math.random().toString(36).substring(2, 6).toUpperCase()}-${Date.now()}`;
+                const trackingId = `TRK-${Math.random().toString(36).substring(2, 6).toUpperCase()}-${Date.now()}`;
                 if (result.isConfirmed) {
                     const finalData = {
                         ...data,
+                        type,
                         cost: total,
-                        created_by: user.email,
+                        created_by: user?.email,
                         trackingId,
                         payment_status: 'unpaid',
                         delivary_status: 'not_collected',
                         creation_date: new Date().toISOString(),
                     };
                     console.log("Final Submitted Data:", finalData);
+                    axiosSecure.post('/parcels', finalData)
+                        .then(res => {
+                            if (res.data.insertedId) {
+                                // redirect to the payment get way 
+                                console.log(res.data)
+                            }
+                        })
+                        .catch(error => {
+                            console.log(error)
+                        })
                     // reset()
                 };
             } else {
@@ -244,7 +257,7 @@ const SendParcel = () => {
                                 <input placeholder="Item type" {...register("itemType")} className="input input-bordered w-full" />
                             </div>
                             <div className="flex flex-col">
-                                <label className="mb-1 font-medium text-[#013220]">Declared Value (৳)</label>
+                                <label className="mb-1 font-medium text-[#013220]">Declared Value (TK)</label>
                                 <input placeholder="Value in Taka" {...register("declaredValue")} className="input input-bordered w-full" />
                             </div>
                         </div>

@@ -8,12 +8,15 @@ import Coverage from "../Pages/coverage/Coverage";
 import Helicopter from "../Pages/Helicapter";
 import PrivetRoutes from "../routes/PrivetRoutes";
 import SendParcel from "../Pages/SendParcel/SendParcel";
+import DeshBoardLayout from "../Layout/DeshBoardLayout";
+import MyParcels from "../Pages/Deshboard/MyParcels/MyParcels";
+import Payment from "../Pages/Deshboard/Payment/Payment";
 
 export const router = createBrowserRouter([
     {
         path: "/",
-        Component:RootLayout,
-        children:[
+        Component: RootLayout,
+        children: [
             {
                 index: true,
                 Component: Home
@@ -24,10 +27,10 @@ export const router = createBrowserRouter([
             },
             {
                 path: 'about',
-                 Component: Helicopter
+                Component: Helicopter
             },
             {
-                path:'sendParcel',
+                path: 'sendParcel',
                 element: <PrivetRoutes><SendParcel></SendParcel></PrivetRoutes>,
                 loader: () => fetch('/warehouses.json')
             },
@@ -37,14 +40,28 @@ export const router = createBrowserRouter([
     {
         path: '/',
         Component: AuthLayout,
-        children:[
+        children: [
             {
-                path:'login',
+                path: 'login',
                 Component: Login
             },
             {
                 path: 'register',
                 Component: Register
+            }
+        ]
+    },
+    {
+        path: '/deshboard',
+        element: <PrivetRoutes><DeshBoardLayout></DeshBoardLayout></PrivetRoutes>,
+        children: [
+            {
+                path: 'myparcels',
+                Component: MyParcels
+            },
+            {
+                path: 'payment/:id',
+                Component: Payment
             }
         ]
     }
