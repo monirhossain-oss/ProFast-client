@@ -40,6 +40,7 @@ const DeshBoardLayout = () => {
                     <ProFastLogo></ProFastLogo>
                     <li><a>Home</a></li>
                     <li><NavLink to='/deshboard/myparcels'>My Parcels</NavLink></li>
+                    <li><NavLink to='/deshboard/payment-history'>My Parcels Hystory</NavLink></li>
                 </ul>
             </div>
         </div>

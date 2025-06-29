@@ -92,8 +92,8 @@ const MyParcels = () => {
                                 </td>
                                 <td
                                     className={`px-3 py-1.5 font-semibold rounded ${parcel.payment_status === "paid"
-                                        ? "text-green-800 bg-green-200"
-                                        : "text-red-800"
+                                        ? "text-green-800 border rounded-xl"
+                                        : "text-red-800 border rounded-xl"
                                         }`}
                                 >
                                     {parcel.payment_status}
@@ -109,8 +109,8 @@ const MyParcels = () => {
                                         onClick={() => handlePay(parcel._id)}
                                         disabled={parcel.payment_status === "paid"}
                                         className={`px-3 py-1 border rounded transition-colors duration-200 text-xs ${parcel.payment_status === "paid"
-                                            ? "border-gray-400 text-gray-400 cursor-not-allowed"
-                                            : "border-green-600 text-green-600 hover:bg-green-600 hover:text-white cursor-pointer"
+                                                ? "border-gray-400 text-gray-400 cursor-not-allowed"
+                                                : "border-green-600 text-green-600 hover:bg-green-600 hover:text-white cursor-pointer"
                                             }`}
                                     >
                                         Pay
